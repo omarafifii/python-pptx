@@ -172,6 +172,16 @@ class Chart(PartElementProxy):
         rewriter = SeriesXmlRewriterFactory(self.chart_type, chart_data)
         rewriter.replace_series_data(self._chartSpace)
         self._workbook.update_from_xlsx_blob(chart_data.xlsx_blob)
+    
+    def replace_data2(self, chart_data):
+        """
+        Use the categories and series values in the |ChartData| object
+        *chart_data* to replace those in the XML and Excel worksheet for this
+        chart.
+        """
+        rewriter = SeriesXmlRewriterFactory(self.chart_type, chart_data)
+        rewriter.replace_series_data2(self._chartSpace)
+        self._workbook.update_from_xlsx_blob(chart_data.xlsx_blob)
 
     @lazyproperty
     def series(self):

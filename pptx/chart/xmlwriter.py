@@ -239,6 +239,22 @@ class _BaseSeriesXmlRewriter(object):
         self._adjust_ser_count(plotArea, len(chart_data))
         for ser, series_data in zip(plotArea.sers, chart_data):
             self._rewrite_ser_data(ser, series_data, date_1904)
+    
+    def replace_series_data2(self, chartSpace):
+        """
+        Rewrite the series data under *chartSpace* using the chart data
+        contents. All series-level formatting is left undisturbed. If
+        the chart data contains fewer series than *chartSpace*, the extra
+        series in *chartSpace* are deleted. If *chart_data* contains more
+        series than the *chartSpace* element, new series are added to the
+        last plot in the chart and series formatting is "cloned" from the
+        last series in that plot.
+        """
+        plotArea, date_1904 = chartSpace.plotArea, chartSpace.date_1904
+        chart_data = self._chart_data
+        self._adjust_ser_count(plotArea, len(chart_data)-1)
+        for ser, series_data in zip(plotArea.sers, chart_data[:-1]):
+            self._rewrite_ser_data(ser, series_data, date_1904)
 
     def _add_cloned_sers(self, plotArea, count):
         """
